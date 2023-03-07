@@ -73,9 +73,9 @@ class_names = prepare_labels_list(file_name)
 
 # Create DataLoaders with help from data_setup.py
 train_dataloader, val_dataloader, test_dataloader = data_setup.create_flowers_dataloaders(
-    train_dir=train_data,
-    val_dir=val_data,
-    test_dir=test_data,
+    train_data=train_data,
+    val_data=val_data,
+    test_data=test_data,
     batch_size=BATCH_SIZE,
     seed=SEED
 )
