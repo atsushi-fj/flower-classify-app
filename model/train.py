@@ -72,7 +72,7 @@ file_name = "Oxford-102_Flower_dataset_labels.txt"
 class_names = prepare_labels_list(file_name)
 
 # Create DataLoaders with help from data_setup.py
-train_dataloader, val_dataloader, test_dataloader = data_setup.create_dataloaders(
+train_dataloader, val_dataloader, test_dataloader = data_setup.create_flowers_dataloaders(
     train_dir=train_data,
     val_dir=val_data,
     test_dir=test_data,
