@@ -82,7 +82,6 @@ train_dataloader, val_dataloader, test_dataloader = data_setup.create_flowers_da
 
 # Create model with help from cct.py
 model = CCT(
-    img_size=IMG_SIZE,
     embedding_dim=EMBEDDING_DIM,
     n_classes=N_CLASSES
 ).to(device)
