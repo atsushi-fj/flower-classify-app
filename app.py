@@ -12,9 +12,10 @@ class_names = get_lines("class_names.txt")
 cct_model, cct_transforms = create_cct_model()
 
 cct_model.load_state_dict(
-    torch.load(f="",
+    torch.load(f="checkpoint_cct_model.pth",
                map_location=torch.device("cpu"))
 )
+
 
 def predict(img):
     start_time = timer()
@@ -28,6 +29,7 @@ def predict(img):
     pred_time = round(end_time - start_time, 4)
     
     return pred_labels_and_probs, pred_time
+
 
 title = "Flower Classify App 👁️🌺"
 description = "An [CCT-7/7x2] (https://arxiv.org/abs/2104.05704v4)"
