@@ -1,4 +1,4 @@
-import subprocess
+import os
 import torch
 import torchvision 
 from torchvision import datasets, transforms
@@ -7,7 +7,7 @@ from pathlib import Path
 import data_setup
 import engine
 from utils import prepare_labels_list, EarlyStopping
-from model_building.cct import CCT
+from model_building import CCT
 
 
 # setup hyperparameters
@@ -21,13 +21,18 @@ BETAS = (0.9, 0.999)
 WEIGHT_DECAY = 6e-2
 PATIENCE = 200
 N_CLASSES = 102
-
+NUM_WORKERS = os.cpu_count()
 
 # Setup directories
 data_dir = Path("data")
 
 # Setup target device
 device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"[INFO] working on {device}")
+
+# Set seed
+torch.manual_seed(SEED)
+torch.cuda.manual_seed(SEED)
 
 # Create trasformers
 train_transforms = transforms.Compose([
@@ -65,10 +70,7 @@ test_data = datasets.Flowers102(
 )
 
 # Get class name
-url = "https://gist.github.com/JosephKJ/94c7728ed1a8e0cd87fe6a029769cde1/raw/403325f5110cb0f3099734c5edb9f457539c77e9/Oxford-102_Flower_dataset_labels.txt"
-cmd = f"wget {url}"
-subprocess.call(cmd.split())
-file_name = "Oxford-102_Flower_dataset_labels.txt"
+file_name = "class_names.txt"
 class_names = prepare_labels_list(file_name)
 
 # Create DataLoaders with help from data_setup.py
@@ -77,14 +79,15 @@ train_dataloader, val_dataloader, test_dataloader = data_setup.create_flowers_da
     val_data=val_data,
     test_data=test_data,
     batch_size=BATCH_SIZE,
-    seed=SEED
+    seed=SEED,
+    num_workers=NUM_WORKERS
 )
 
 # Create model with help from cct.py
 model = CCT(
     embedding_dim=EMBEDDING_DIM,
     n_classes=N_CLASSES
-).to(device)
+)
 
 # Set loss and optimizer
 loss_fn = torch.nn.CrossEntropyLoss()

@@ -50,4 +50,4 @@ def prepare_labels_list(filename):
     labels = []
     for line in input_lines:
         labels.append(line.strip().replace("'", ""))
-    return labels 
+    return labels
