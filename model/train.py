@@ -70,7 +70,7 @@ test_data = datasets.Flowers102(
 )
 
 # Get class name
-file_path = "class_names.txt"
+file_path = "flower-classify-app/model/class_names.txt"
 class_names = prepare_labels_list(file_path)
 
 # Create DataLoaders with help from data_setup.py
