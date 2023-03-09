@@ -70,8 +70,8 @@ test_data = datasets.Flowers102(
 )
 
 # Get class name
-file_name = "class_names.txt"
-class_names = prepare_labels_list(file_name)
+file_path = "../class_names.txt"
+class_names = prepare_labels_list(file_path)
 
 # Create DataLoaders with help from data_setup.py
 train_dataloader, val_dataloader, test_dataloader = data_setup.create_flowers_dataloaders(
